@@ -13,16 +13,16 @@ from optimism import ReadExodusMesh
 from optimism import SparseMatrixAssembler
 from optimism import VTKWriter
 
-mesh = ReadExodusMesh.read_exodus_mesh('reEntrantHoneyComb_coarse_scaled_actual2D_tris.g')
+mesh = ReadExodusMesh.read_exodus_mesh("honeycomb.g")
 mesh = Mesh.create_higher_order_mesh_from_simplex_mesh(mesh, order=2, useBubbleElement=False, copyNodeSets=False, createNodeSetsFromSideSets=True)
 
-ebcs = [FunctionSpace.EssentialBC(nodeSet='sideset_1', component=0),
-        FunctionSpace.EssentialBC(nodeSet='sideset_3', component=0),
-        FunctionSpace.EssentialBC(nodeSet='sideset_2', component=1),
-        FunctionSpace.EssentialBC(nodeSet='sideset_4', component=1)]
+ebcs = [FunctionSpace.EssentialBC(nodeSet="left", component=0),
+        FunctionSpace.EssentialBC(nodeSet="right", component=0),
+        FunctionSpace.EssentialBC(nodeSet="bottom", component=1),
+        FunctionSpace.EssentialBC(nodeSet="top", component=1)]
 
 quadRule = QuadratureRule.create_quadrature_rule_on_triangle(degree=2*(mesh.parentElement.degree - 1))
-fs = FunctionSpace.construct_function_space(mesh, quadRule, mode2D='axisymmetric')
+fs = FunctionSpace.construct_function_space(mesh, quadRule, mode2D="cartesian")
 ebcManager = FunctionSpace.DofManager(fs, dim=2, EssentialBCs=ebcs)
 
 kappa = 10.0
@@ -46,7 +46,7 @@ outputDisp = []
 def get_ubcs(p):
     yLoc = p[0]
     V = np.zeros_like(mesh.coords)
-    index = mesh.nodeSets['sideset_4'], 1
+    index = mesh.nodeSets["top"], 1
     V = V.at[index].set(yLoc)
     return ebcManager.get_bc_values(V)
 
@@ -99,7 +99,7 @@ def write_output(U, p, step):
     
     writer.write()
 
-    outputForce.append(float(-np.sum(reactions[mesh.nodeSets['sideset_4'], 1])))
+    outputForce.append(float(-np.sum(reactions[mesh.nodeSets["top"], 1])))
     outputDisp.append(float(-p[0]))
 
     with open('force_displacement.npz','wb') as f:
