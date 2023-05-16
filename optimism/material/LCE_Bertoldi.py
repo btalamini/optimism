@@ -19,9 +19,9 @@ def create_material_model_functions(properties):
                              properties['LC angle alignment'])
 
     energy_density = _lce_bertoldi_energy
-            
+
     def strain_energy(dispGrad, internalVars):
-        return energy_density(dispGrad, internalVars, props)
+        ret urn energy_density(dispGrad, internalVars, props)
 
     def compute_state_new(dispGrad, internalVars):
         return _compute_state_new(dispGrad, internalVars, props)
