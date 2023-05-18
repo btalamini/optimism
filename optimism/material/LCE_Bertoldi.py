@@ -20,11 +20,11 @@ def create_material_model_functions(properties):
 
     energy_density = _lce_bertoldi_energy
 
-    def strain_energy(dispGrad, internalVars):
-        ret urn energy_density(dispGrad, internalVars, props)
+    def strain_energy(dispGrad, internalVars, currentOrder):
+        return energy_density(dispGrad, internalVars, props, currentOrder)
 
-    def compute_state_new(dispGrad, internalVars):
-        return _compute_state_new(dispGrad, internalVars, props)
+    def compute_state_new(dispGrad, internalVars, currentOrder):
+        return _compute_state_new(dispGrad, internalVars, props, currentOrder)
 
     density = properties.get('density')
 
@@ -38,16 +38,17 @@ def _make_properties(E, nu, beta, currentOrder, refOrder, gammaAngle):
     # lamda = E*nu/(1 + nu)/(1 - 2*nu)
     return np.array([E, nu, beta, currentOrder, refOrder, gammaAngle])
 
-def _lce_bertoldi_energy(dispGrad, internalVariables, props):
+def _lce_bertoldi_energy(dispGrad, internalVariables, props, currentOrder):
     
     # material-dependent scalars
     mu = 0.5*props[P_E]/(1.0 + props[P_NU])
     lamda = props[P_E]*props[P_NU]/(1 + props[P_NU])/(1 - 2*props[P_NU])
-    eta = 0.5*props[P_BETA] * (props[P_ST]-props[P_S0])
+    # eta = 0.5*props[P_BETA] * (props[P_ST]-props[P_S0])
+    eta = 0.5*props[P_BETA] * (currentOrder-props[P_S0])
 
     # LC direction
-    angle = P_GAMMA/180.0*math.pi
-    n = np.array([math.cos(angle), math.sin(angle), 0.0])
+    angle = P_GAMMA/180.0*np.pi
+    n = np.array([np.cos(angle), np.sin(angle), 0.0])
 
     # tensor definitions
     I = np.eye(3)
@@ -66,5 +67,5 @@ def make_initial_state():
     return np.array([])
 
 
-def _compute_state_new(dispGrad, internalVars, props):
+def _compute_state_new(dispGrad, internalVars, props, currentOrder):
     return internalVars

@@ -26,18 +26,17 @@ if useFullMesh:
 
 #mesh = Mesh.create_higher_order_mesh_from_simplex_mesh(mesh, order=2, useBubbleElement=False, copyNodeSets=False, createNodeSetsFromSideSets=True)
 
-ebcs = [FunctionSpace.EssentialBC(nodeSet="left", component=0),
-        FunctionSpace.EssentialBC(nodeSet="right", component=0),
-        FunctionSpace.EssentialBC(nodeSet="bottom", component=1),
-        FunctionSpace.EssentialBC(nodeSet="top", component=1)]
+# ebcs = [FunctionSpace.EssentialBC(nodeSet="left", x=0),
+#         FunctionSpace.EssentialBC(nodeSet="right", component=0),
+#         FunctionSpace.EssentialBC(nodeSet="bottom", component=1),
+#         FunctionSpace.EssentialBC(nodeSet="top", component=1)]
 
 # ebcs = [FunctionSpace.EssentialBC(nodeSet="bottom", component=0),
 #         FunctionSpace.EssentialBC(nodeSet="bottom", component=1),
 #         FunctionSpace.EssentialBC(nodeSet="top", component=1)]
 
-# ebcs = [FunctionSpace.EssentialBC(nodeSet="left", component=0),
-#         FunctionSpace.EssentialBC(nodeSet="bottom", component=1),
-#         FunctionSpace.EssentialBC(nodeSet="top", component=1)]
+ebcs = [FunctionSpace.EssentialBC(nodeSet="left", component=0),
+        FunctionSpace.EssentialBC(nodeSet="bottom", component=1)]
 
 quadRule = QuadratureRule.create_quadrature_rule_on_triangle(degree=2*(mesh.parentElement.degree - 1))
 fs = FunctionSpace.construct_function_space(mesh, quadRule, mode2D="cartesian")
@@ -77,10 +76,10 @@ outputForce = []
 outputDisp = []
 
 def get_ubcs(p):
-    yLoc = p[0]
+    # yLoc = p[0]
     V = np.zeros_like(mesh.coords)
-    index = mesh.nodeSets["top"], 1
-    V = V.at[index].set(yLoc)
+    # index = mesh.nodeSets["top"], 1
+    # V = V.at[index].set(yLoc)
     return ebcManager.get_bc_values(V)
 
 def create_field(Uu, p):
@@ -89,12 +88,14 @@ def create_field(Uu, p):
 def compute_potential(Uu, p):
     U = create_field(Uu, p)
     internalVariables = p[1]
-    return solidMechanics.compute_strain_energy(U, internalVariables)
+    currentOrder = p[2]
+    return solidMechanics.compute_strain_energy(U, internalVariables, currentOrder)
 
 def assemble_sparse_preconditioner(Uu, p):
     U = create_field(Uu, p)
     internalVariables = p[1]
-    elementStiffnesses =  solidMechanics.compute_element_stiffnesses(U, internalVariables)
+    currentOrder = p[2]
+    elementStiffnesses =  solidMechanics.compute_element_stiffnesses(U, internalVariables, currentOrder)
     return SparseMatrixAssembler.assemble_sparse_stiffness_matrix(elementStiffnesses,
                                                                   fs.mesh.conns,
                                                                   ebcManager)
@@ -138,9 +139,9 @@ def compute_constraints(Uu, p):
     return np.hstack((contactDists1.ravel(), contactDists2.ravel(), contactDists3.ravel()))
 
 
-def compute_energy_from_bcs(Uu, Ubc, internalVariables):
+def compute_energy_from_bcs(Uu, Ubc, internalVariables, currentOrder):
     U = ebcManager.create_field(Uu, Ubc)
-    return solidMechanics.compute_strain_energy(U, internalVariables)
+    return solidMechanics.compute_strain_energy(U, internalVariables, currentOrder)
 
 compute_bc_reactions = jax.jit(jax.grad(compute_energy_from_bcs, 1))
 
@@ -155,11 +156,12 @@ def write_output(U, p, step):
 
     Ubc = get_ubcs(p)
     internalVariables = p[1]
-    rxnBc = compute_bc_reactions(ebcManager.get_unknown_values(U), Ubc, internalVariables)
+    currentOrder = p[2]
+    rxnBc = compute_bc_reactions(ebcManager.get_unknown_values(U), Ubc, internalVariables, currentOrder)
     reactions = np.zeros(U.shape).at[ebcManager.isBc].set(rxnBc)
     writer.add_nodal_field(name='reactions', nodalData=reactions, fieldType=VTKWriter.VTKFieldType.VECTORS)
 
-    energyDensities, stresses = solidMechanics.compute_output_energy_densities_and_stresses(U, internalVariables)
+    energyDensities, stresses = solidMechanics.compute_output_energy_densities_and_stresses(U, internalVariables, currentOrder)
     cellEnergyDensities = FunctionSpace.project_quadrature_field_to_element_field(fs, energyDensities)
     cellStresses = FunctionSpace.project_quadrature_field_to_element_field(fs, stresses)
     writer.add_cell_field(name='strain_energy_density',
@@ -257,7 +259,8 @@ def run():
     Uu = ebcManager.get_unknown_values(np.zeros_like(mesh.coords))
     disp = 0.0
     ivs = solidMechanics.compute_initial_state()
-    p = Objective.Params(disp, ivs)
+    maxOrder = 0.4
+    p = Objective.Params(disp, ivs, maxOrder)
     
     searchFrequency = 1
     p = update_contact_params(Uu, p)
@@ -276,7 +279,7 @@ def run():
 
     write_output(create_field(Uu, p), p, step=0)
     
-    steps = 40
+    steps = 10
     maxDisp = 2.5*1.5e-3
     if useFullMesh:
         maxDisp = 5.5*1.5e-3
@@ -290,8 +293,10 @@ def run():
         print('')
         print('')
 
-        disp -= maxDisp/steps
-        p = Objective.param_index_update(p, 0, disp)
+        # disp -= maxDisp/steps
+        # p = Objective.param_index_update(p, 0, disp)
+        currentOrder = maxOrder*(steps-i)/steps
+        p = Objective.param_index_update(p, 2, currentOrder)
         contactDists = compute_constraints(Uu, p)
         print(f"Contact dists = {np.amin(contactDists)}, {np.amax(contactDists)}")
         # Uu = EquationSolver.nonlinear_equation_solve(objective,
