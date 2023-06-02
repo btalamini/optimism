@@ -82,10 +82,10 @@ def _compute_element_stiffnesses(U, internals, dt, functionSpace, compute_energy
 
 def _compute_strain_energy(functionSpace, UField, stateField, dt,
                            compute_energy_density,
-                           modify_element_gradient):
+                           modify_element_gradient, *params):
     L = strain_energy_density_to_lagrangian_density(compute_energy_density)
     return FunctionSpace.integrate_over_block(functionSpace, UField, stateField, dt, L,
-                                              slice(None),
+                                              slice(None), *params,
                                               modify_element_gradient=modify_element_gradient)
 
 
@@ -186,8 +186,8 @@ def _compute_element_stiffnesses_multi_block(U, stateVariables, functionSpace, b
 
 
 def strain_energy_density_to_lagrangian_density(strain_energy_density):
-    def L(U, gradU, Q, X, dt):
-        return strain_energy_density(gradU, Q, dt)
+    def L(U, gradU, Q, X, dt, *params):
+        return strain_energy_density(gradU, Q, dt, *params)
     return L
 
 
@@ -267,24 +267,24 @@ def create_mechanics_functions(functionSpace, mode2D, materialModel, pressurePro
             return grad_2D_to_3D(elemGrads, elemShapes, elemVols, elemNodalDisps, elemNodalCoords)
     
     
-    def compute_strain_energy(U, stateVariables, dt=0.0):
-        return _compute_strain_energy(fs, U, stateVariables, dt, materialModel.compute_energy_density, modify_element_gradient)
+    def compute_strain_energy(U, stateVariables, dt=0.0, *params):
+        return _compute_strain_energy(fs, U, stateVariables, dt, materialModel.compute_energy_density, modify_element_gradient, *params)
 
         
-    def compute_updated_internal_variables(U, stateVariables, dt=0.0):
-        return _compute_updated_internal_variables(fs, U, stateVariables, dt, materialModel.compute_state_new, modify_element_gradient)
+    def compute_updated_internal_variables(U, stateVariables, dt=0.0, *params):
+        return _compute_updated_internal_variables(fs, U, stateVariables, dt, materialModel.compute_state_new, modify_element_gradient, *params)
 
     
-    def compute_element_stiffnesses(U, stateVariables, dt=0.0):
-        return _compute_element_stiffnesses(U, stateVariables, dt, fs, materialModel.compute_energy_density, modify_element_gradient)
+    def compute_element_stiffnesses(U, stateVariables, dt=0.0, *params):
+        return _compute_element_stiffnesses(U, stateVariables, dt, fs, materialModel.compute_energy_density, modify_element_gradient, *params)
 
 
     output_lagrangian = strain_energy_density_to_lagrangian_density(materialModel.compute_energy_density)
     output_constitutive = value_and_grad(output_lagrangian, 1)
 
     
-    def compute_output_energy_densities_and_stresses(U, stateVariables, dt=0.0):
-        return FunctionSpace.evaluate_on_block(fs, U, stateVariables, dt, output_constitutive, slice(None), modify_element_gradient=modify_element_gradient)
+    def compute_output_energy_densities_and_stresses(U, stateVariables, dt=0.0, *params):
+        return FunctionSpace.evaluate_on_block(fs, U, stateVariables, dt, output_constitutive, slice(None), modify_element_gradient=modify_element_gradient, *params)
 
     
     def compute_initial_state():
