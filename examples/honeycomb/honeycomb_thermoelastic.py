@@ -177,6 +177,7 @@ def run():
     
     steps = 5
     dtheta = 4.0
+    dt = 1.0
     for i in range(steps):
         print('--------------------------------------')
         print('LOAD STEP ', i)
@@ -191,6 +192,7 @@ def run():
         #                                              solverSettings)
         Uu = AlSolver.augmented_lagrange_solve(objective, Uu, p, alSettings, solverSettings)
         U = create_field(Uu, p)
+        ivs = solidMechanics.compute_updated_internal_variables(U, ivs, dt, temperature)
         write_output(U, p, i + 1)
 
 if __name__ == "__main__":

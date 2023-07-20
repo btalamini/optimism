@@ -105,11 +105,11 @@ def _compute_strain_energy_multi_block(functionSpace, UField, stateField, dt, bl
     return energy
 
 
-def _compute_updated_internal_variables(functionSpace, U, states, dt, compute_state_new, modify_element_gradient):
+def _compute_updated_internal_variables(functionSpace, U, states, dt, compute_state_new, modify_element_gradient, *params):
     dispGrads = FunctionSpace.compute_field_gradient(functionSpace, U, modify_element_gradient)
     dgQuadPointRavel = dispGrads.reshape(dispGrads.shape[0]*dispGrads.shape[1],*dispGrads.shape[2:])
     stQuadPointRavel = states.reshape(states.shape[0]*states.shape[1],*states.shape[2:])
-    statesNew = vmap(compute_state_new, (0, 0, None))(dgQuadPointRavel, stQuadPointRavel, dt)
+    statesNew = vmap(compute_state_new, (0, 0, None, *tuple(0 for p in params)))(dgQuadPointRavel, stQuadPointRavel, dt, *params)
     return statesNew.reshape(states.shape)
 
 

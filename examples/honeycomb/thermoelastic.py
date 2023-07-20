@@ -16,7 +16,6 @@ def create_material_model_functions(properties):
     _strain = green_lagrange_strain
     
     def strain_energy(dispGrad, internalVars, dt, temperature):
-        del internalVars
         del dt
         strain = _strain(dispGrad)
         return _energy_density(strain, temperature, props)
@@ -54,9 +53,10 @@ def make_initial_state():
     return np.array([])
 
 
-def compute_state_new(dispGrad, internalVars, dt):
+def compute_state_new(dispGrad, internalVars, dt, temperature):
     del dispGrad
     del dt
+    del temperature
     return internalVars
 
 
