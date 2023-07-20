@@ -1,0 +1,52 @@
+reset
+import mesh geometry "/Users/barreracruz1/OneDrive - LLNL/Work/Projects/LiquidCrystalElastomer/codes/Optimism/honeycombLattice/optimism/examples/honeycomb/reEntrantHoneyComb_coarse_scaled_pseudo2D_paraview.g" feature_angle 135.00  merge 
+delete mesh
+undo group begin
+surface 1  Scheme TriMesh
+surface 1  size auto factor 3
+mesh surface 1 
+undo group end
+ 	
+delete block 1
+set duplicate block elements off
+block 1 add surface 1 
+block 1 element type TRI
+#block 1 element type QUAD4
+
+sideset 1 add curve 34 15 1 
+sideset 1 name "left"
+sideset 2 add curve 2 7 36 
+sideset 2 name "bottom"
+sideset 3 add curve 35
+sideset 3 name "right"
+sideset 4 add curve 33  
+sideset 4 name "top"
+
+nodeset 1 add curve 34 15 1 
+nodeset 1 name "left"
+nodeset 2 add curve 2 7 36 
+nodeset 2 name "bottom"
+nodeset 3 add curve 35
+nodeset 3 name "right"
+nodeset 4 add curve 33  
+nodeset 4 name "top"
+
+sideset 5 add curve 30
+sideset 5 name "cell_0_contact_A"
+sideset 6 add curve 28
+sideset 6 name "cell_0_contact_B
+
+sideset 7 add curve 27
+sideset 7 name "cell_1_contact_A"
+sideset 8 add curve 24
+sideset 8 name "cell_1_contact_B"
+
+sideset 9 add curve 16
+sideset 9 name "cell_2_contact_A"
+sideset 10 add curve 3
+sideset 10 name "cell_2_contact_B"
+
+sideset 11 add curve 19
+sideset 11 name "cell_3_contact_A"
+sideset 12 add curve 8
+sideset 12 name "cell_3_contact_B"
