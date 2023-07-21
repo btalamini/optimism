@@ -3,17 +3,8 @@ import jax.numpy as np
 from optimism.material.MaterialModel import MaterialModel
 from optimism import TensorMath
 
-# props
-PROPS_E     = 0
-PROPS_NU    = 1
-PROPS_MU    = 2
-PROPS_KAPPA = 3
-
 
 def create_material_model_functions(properties):
-    props = _make_properties(properties['elastic modulus'],
-                             properties['poisson ratio'])
-
     if 'strain measure' in properties:
         strainMeasure = properties['strain measure']
     else:
@@ -28,11 +19,11 @@ def create_material_model_functions(properties):
     else:
         raise ValueError('Unrecognized strain measure')
     
-    def strain_energy(dispGrad, internalVars, dt):
+    def strain_energy(dispGrad, internalVars, dt, E, nu):
         del internalVars
         del dt
         strain = _strain(dispGrad)
-        return _linear_elastic_energy_density(strain, props)
+        return _linear_elastic_energy_density(strain, E, nu)
 
     density = properties.get('density')
 
@@ -42,18 +33,12 @@ def create_material_model_functions(properties):
                          density = density)
 
 
-def _make_properties(E, nu):
-    mu = 0.5*E/(1.0 + nu)
-    kappa = E / 3.0 / (1.0 - 2.0*nu)
-    return np.array([E, nu, mu, kappa])
-
-
-def _linear_elastic_energy_density(strain, props):
+def _linear_elastic_energy_density(strain, E, nu):
     traceStrain = np.trace(strain)
     dil = 1.0/3.0 * traceStrain
     strainDev = strain - dil*np.identity(3)
-    kappa = props[PROPS_KAPPA]
-    mu = props[PROPS_MU]
+    kappa = E / 3.0 / (1.0 - 2.0*nu)
+    mu = 0.5*E/(1.0 + nu)
     return 0.5*kappa*traceStrain**2 + mu*np.tensordot(strainDev,strainDev)
 
 
@@ -61,9 +46,11 @@ def make_initial_state():
     return np.array([])
 
 
-def compute_state_new(dispGrad, internalVars, dt):
+def compute_state_new(dispGrad, internalVars, dt, E, nu):
     del dispGrad
     del dt
+    del E
+    del nu
     return internalVars
 
 
