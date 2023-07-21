@@ -89,7 +89,8 @@ def compute_potential(Uu, p):
     U = create_field(Uu, p)
     internalVariables = p[1]
     currentOrder = p[2]
-    return solidMechanics.compute_strain_energy(U, internalVariables, currentOrder)
+    dt = 1.0
+    return solidMechanics.compute_strain_energy(U, internalVariables, dt, currentOrder)
 
 def assemble_sparse_preconditioner(Uu, p):
     U = create_field(Uu, p)

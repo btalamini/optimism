@@ -23,9 +23,9 @@ def create_material_model_functions(properties):
         del dt
         return energy_density(dispGrad, internalVars, props, currentOrder)
 
-    def compute_state_new(dispGrad, internalVars, currentOrder):
+    def compute_state_new(dispGrad, internalVars, dt, currentOrder):
         del dt
-        return _compute_state_new(dispGrad, internalVars, props, dt, currentOrder)
+        return _compute_state_new(dispGrad, internalVars, props, currentOrder)
 
     density = properties.get('density')
 
