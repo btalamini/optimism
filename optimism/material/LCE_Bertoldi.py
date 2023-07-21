@@ -20,11 +20,12 @@ def create_material_model_functions(properties):
 
     energy_density = _lce_bertoldi_energy
 
-    def strain_energy(dispGrad, internalVars, currentOrder):
+    def strain_energy(dispGrad, internalVars, dt, currentOrder):
+        del dt
         return energy_density(dispGrad, internalVars, props, currentOrder)
 
-    def compute_state_new(dispGrad, internalVars, currentOrder):
-        return _compute_state_new(dispGrad, internalVars, props, currentOrder)
+    def compute_state_new(dispGrad, internalVars, dt, currentOrder):
+        return _compute_state_new(dispGrad, internalVars, props, dt, currentOrder)
 
     density = properties.get('density')
 
@@ -66,6 +67,12 @@ def _lce_bertoldi_energy(dispGrad, internalVariables, props, currentOrder):
 def make_initial_state():
     return np.array([])
 
+# def _compute_state_new(dispGrad, internalVars, props, currentOrder):
+#     return internalVars
 
-def _compute_state_new(dispGrad, internalVars, props, currentOrder):
+def _compute_state_new(dispGrad, internalVars, props, dt, currentOrder):
+    del dispGrad
+    del dt
+    del props
+    del currentOrder
     return internalVars

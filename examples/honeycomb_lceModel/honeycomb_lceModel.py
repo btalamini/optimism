@@ -26,17 +26,17 @@ if useFullMesh:
 
 #mesh = Mesh.create_higher_order_mesh_from_simplex_mesh(mesh, order=2, useBubbleElement=False, copyNodeSets=False, createNodeSetsFromSideSets=True)
 
-# ebcs = [FunctionSpace.EssentialBC(nodeSet="left", x=0),
-#         FunctionSpace.EssentialBC(nodeSet="right", component=0),
-#         FunctionSpace.EssentialBC(nodeSet="bottom", component=1),
-#         FunctionSpace.EssentialBC(nodeSet="top", component=1)]
+ebcs = [FunctionSpace.EssentialBC(nodeSet="left", component=0),
+        FunctionSpace.EssentialBC(nodeSet="right", component=0),
+        FunctionSpace.EssentialBC(nodeSet="bottom", component=1),
+        FunctionSpace.EssentialBC(nodeSet="top", component=1)]
 
 # ebcs = [FunctionSpace.EssentialBC(nodeSet="bottom", component=0),
 #         FunctionSpace.EssentialBC(nodeSet="bottom", component=1),
 #         FunctionSpace.EssentialBC(nodeSet="top", component=1)]
 
-ebcs = [FunctionSpace.EssentialBC(nodeSet="left", component=0),
-        FunctionSpace.EssentialBC(nodeSet="bottom", component=1)]
+# ebcs = [FunctionSpace.EssentialBC(nodeSet="left", component=0),
+#         FunctionSpace.EssentialBC(nodeSet="bottom", component=1)]
 
 quadRule = QuadratureRule.create_quadrature_rule_on_triangle(degree=2*(mesh.parentElement.degree - 1))
 fs = FunctionSpace.construct_function_space(mesh, quadRule, mode2D="cartesian")
@@ -89,7 +89,8 @@ def compute_potential(Uu, p):
     U = create_field(Uu, p)
     internalVariables = p[1]
     currentOrder = p[2]
-    return solidMechanics.compute_strain_energy(U, internalVariables, currentOrder)
+    dt = 1.0
+    return solidMechanics.compute_strain_energy(U, internalVariables, dt, currentOrder)
 
 def assemble_sparse_preconditioner(Uu, p):
     U = create_field(Uu, p)
@@ -141,7 +142,8 @@ def compute_constraints(Uu, p):
 
 def compute_energy_from_bcs(Uu, Ubc, internalVariables, currentOrder):
     U = ebcManager.create_field(Uu, Ubc)
-    return solidMechanics.compute_strain_energy(U, internalVariables, currentOrder)
+    dt = 0.0
+    return solidMechanics.compute_strain_energy(U, internalVariables, dt, currentOrder)
 
 compute_bc_reactions = jax.jit(jax.grad(compute_energy_from_bcs, 1))
 
@@ -161,7 +163,8 @@ def write_output(U, p, step):
     reactions = np.zeros(U.shape).at[ebcManager.isBc].set(rxnBc)
     writer.add_nodal_field(name='reactions', nodalData=reactions, fieldType=VTKWriter.VTKFieldType.VECTORS)
 
-    energyDensities, stresses = solidMechanics.compute_output_energy_densities_and_stresses(U, internalVariables, currentOrder)
+    dt = 1.0
+    energyDensities, stresses = solidMechanics.compute_output_energy_densities_and_stresses(U, internalVariables, dt, currentOrder)
     cellEnergyDensities = FunctionSpace.project_quadrature_field_to_element_field(fs, energyDensities)
     cellStresses = FunctionSpace.project_quadrature_field_to_element_field(fs, stresses)
     writer.add_cell_field(name='strain_energy_density',
@@ -273,13 +276,14 @@ def run():
     print(f"kappa0.shape={kappa0.shape}")
     print(f"lam0.shape={lam0.shape}")
     
-    precondStrategy = Objective.PrecondStrategy(assemble_sparse_preconditioner)
+    #precondStrategy = Objective.PrecondStrategy(assemble_sparse_preconditioner)
     #objective = Objective.Objective(compute_potential, Uu, p, precondStrategy)
     objective = ConstrainedObjective.ConstrainedObjective(compute_potential, compute_constraints, Uu, p, lam0, kappa0)
 
     write_output(create_field(Uu, p), p, step=0)
     
     steps = 10
+    dt = 1.0
     maxDisp = 2.5*1.5e-3
     if useFullMesh:
         maxDisp = 5.5*1.5e-3
@@ -305,6 +309,7 @@ def run():
         #                                              solverSettings)
         Uu = AlSolver.augmented_lagrange_solve(objective, Uu, p, alSettings, solverSettings)
         U = create_field(Uu, p)
+        ivs = solidMechanics.compute_updated_internal_variables(U, ivs, dt, currentOrder)
         write_output(U, p, i)
 
 if __name__ == "__main__":
