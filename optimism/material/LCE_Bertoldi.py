@@ -1,6 +1,5 @@
-from optimism.JaxConfig import *
+import jax.numpy as np
 from optimism.material.MaterialModel import MaterialModel
-import math
 
 # props
 P_E      = 0
@@ -24,7 +23,8 @@ def create_material_model_functions(properties):
         del dt
         return energy_density(dispGrad, internalVars, props, currentOrder)
 
-    def compute_state_new(dispGrad, internalVars, dt, currentOrder):
+    def compute_state_new(dispGrad, internalVars, currentOrder):
+        del dt
         return _compute_state_new(dispGrad, internalVars, props, dt, currentOrder)
 
     density = properties.get('density')
@@ -70,9 +70,8 @@ def make_initial_state():
 # def _compute_state_new(dispGrad, internalVars, props, currentOrder):
 #     return internalVars
 
-def _compute_state_new(dispGrad, internalVars, props, dt, currentOrder):
+def _compute_state_new(dispGrad, internalVars, props, currentOrder):
     del dispGrad
-    del dt
     del props
     del currentOrder
     return internalVars

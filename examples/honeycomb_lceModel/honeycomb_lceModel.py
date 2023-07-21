@@ -89,8 +89,7 @@ def compute_potential(Uu, p):
     U = create_field(Uu, p)
     internalVariables = p[1]
     currentOrder = p[2]
-    dt = 1.0
-    return solidMechanics.compute_strain_energy(U, internalVariables, dt, currentOrder)
+    return solidMechanics.compute_strain_energy(U, internalVariables, currentOrder)
 
 def assemble_sparse_preconditioner(Uu, p):
     U = create_field(Uu, p)
@@ -142,7 +141,7 @@ def compute_constraints(Uu, p):
 
 def compute_energy_from_bcs(Uu, Ubc, internalVariables, currentOrder):
     U = ebcManager.create_field(Uu, Ubc)
-    dt = 0.0
+    dt = 1.0
     return solidMechanics.compute_strain_energy(U, internalVariables, dt, currentOrder)
 
 compute_bc_reactions = jax.jit(jax.grad(compute_energy_from_bcs, 1))
@@ -150,6 +149,7 @@ compute_bc_reactions = jax.jit(jax.grad(compute_energy_from_bcs, 1))
 def write_output(U, p, step):
     plotName = 'lce-full-honeycomb-order-diffBCs-'+str(step).zfill(3)
     writer = VTKWriter.VTKWriter(mesh, baseFileName=plotName)
+    dt = 1.0
     
     writer.add_nodal_field(name='displacement', nodalData=U, fieldType=VTKWriter.VTKFieldType.VECTORS)
 
@@ -163,7 +163,6 @@ def write_output(U, p, step):
     reactions = np.zeros(U.shape).at[ebcManager.isBc].set(rxnBc)
     writer.add_nodal_field(name='reactions', nodalData=reactions, fieldType=VTKWriter.VTKFieldType.VECTORS)
 
-    dt = 1.0
     energyDensities, stresses = solidMechanics.compute_output_energy_densities_and_stresses(U, internalVariables, dt, currentOrder)
     cellEnergyDensities = FunctionSpace.project_quadrature_field_to_element_field(fs, energyDensities)
     cellStresses = FunctionSpace.project_quadrature_field_to_element_field(fs, stresses)
@@ -262,7 +261,7 @@ def run():
     Uu = ebcManager.get_unknown_values(np.zeros_like(mesh.coords))
     disp = 0.0
     ivs = solidMechanics.compute_initial_state()
-    maxOrder = 0.4
+    maxOrder = 0.4*np.ones(Mesh.num_elements(mesh))
     p = Objective.Params(disp, ivs, maxOrder)
     
     searchFrequency = 1
