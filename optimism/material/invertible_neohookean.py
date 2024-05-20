@@ -47,7 +47,7 @@ def continued_energy(dudX, lam, mu):
     C = F.T@F
     stretches_squared, right_evecs = TensorMath.eigen_sym33_unit(C)
     stretches = np.sqrt(stretches_squared)
-    # stretches = stretches.at[0].set(np.where(J < 0, -stretches[0], stretches[0]))
+    stretches = stretches.at[0].set(np.where(J < 0, -stretches[0], stretches[0]))
     r = np.ones(3)
     ee = stretches - 1
     I1 = ee[0] + ee[1] + ee[2]
@@ -58,13 +58,12 @@ def continued_energy(dudX, lam, mu):
     s, _ = ScalarRootFind.find_root(lambda x: I3*x**3 + I2*x**2 + I1*x + Jmin, 0.5, np.array([0.0, 1.0]), solver_settings)
     q = r + s*ee
     h = np.linalg.norm(stretches - q)
-    u = ee/np.linalg.norm(ee)
-    jax.debug.print("s={s}, h={h}, u={u}, q={q}", s=s, h=h, u=u, q=q)
-    psi0 = _energy_from_principal_stretches(q, lam, mu)
-    psi1 = jax.jvp(_energy_from_principal_stretches, (q, lam, mu), (h*u, 0.0, 0.0))[1]
-    tmp = jax.jvp(jax.grad(_energy_from_principal_stretches, 0), (q, lam, mu), (h*u, 0.0, 0.0))[1]
-    psi2 = np.dot(tmp, 0.5*h*u)
-    jax.debug.print("psi2={psi2}", psi2=psi2)
+    v = h*ee/np.linalg.norm(ee) # h*u in the paper
+    # jax.debug.print("s={s}, h={h}, u={u}, q={q}", s=s, h=h, u=v, q=q)
+    psi0, psi1 = jax.jvp(_energy_from_principal_stretches, (q, lam, mu), (v, 0.0, 0.0))
+    _, Av = jax.jvp(jax.grad(_energy_from_principal_stretches, 0), (q, lam, mu), (v, 0.0, 0.0))
+    psi2 =  0.5*np.dot(v, Av)
+    # jax.debug.print("psi2={psi2}", psi2=psi2)
     return psi0 + psi1 + psi2
 
 def _energy_from_principal_stretches(stretches, lam, mu):
