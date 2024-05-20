@@ -1,6 +1,7 @@
 import jax
 import jax.numpy as np
 
+from optimism import ScalarRootFind
 from optimism import TensorMath
 from optimism.material.MaterialModel import MaterialModel
 
@@ -52,15 +53,18 @@ def continued_energy(dudX, lam, mu):
     I1 = ee[0] + ee[1] + ee[2]
     I2 = ee[0]*ee[1] + ee[1]*ee[2] + ee[2]*ee[0]
     I3 = ee[0]*ee[1]*ee[2]
-    s = cubic_three_real_roots(np.array([1 - CONTINUATION_POINT, I1, I2, I3]))
-    jax.debug.print("s={s}", s=s)
+    solver_settings = ScalarRootFind.get_settings(x_tol=1e-8)
+    Jmin = 1 - CONTINUATION_POINT
+    s, _ = ScalarRootFind.find_root(lambda x: I3*x**3 + I2*x**2 + I1*x + Jmin, 0.5, np.array([0.0, 1.0]), solver_settings)
     q = r + s*ee
     h = np.linalg.norm(stretches - q)
-    u = -ee/np.linalg.norm(ee)
+    u = ee/np.linalg.norm(ee)
+    jax.debug.print("s={s}, h={h}, u={u}, q={q}", s=s, h=h, u=u, q=q)
     psi0 = _energy_from_principal_stretches(q, lam, mu)
-    psi1 = 0.0 #jax.jvp(_energy_from_principal_stretches, (q, lam, mu), (h*u, 0.0, 0.0))[0]
-    tmp = jax.jvp(jax.grad(_energy_from_principal_stretches, 0), (q, lam, mu), (h*u, 0.0, 0.0))[0]
-    psi2 = 0.0 #np.dot(tmp, 0.5*h*u)
+    psi1 = jax.jvp(_energy_from_principal_stretches, (q, lam, mu), (h*u, 0.0, 0.0))[1]
+    tmp = jax.jvp(jax.grad(_energy_from_principal_stretches, 0), (q, lam, mu), (h*u, 0.0, 0.0))[1]
+    psi2 = np.dot(tmp, 0.5*h*u)
+    jax.debug.print("psi2={psi2}", psi2=psi2)
     return psi0 + psi1 + psi2
 
 def _energy_from_principal_stretches(stretches, lam, mu):
@@ -92,3 +96,11 @@ def cubic_three_real_roots(b):
     x = -2*np.sqrt(Q)*np.cos(np.array([theta, theta + 2*np.pi, theta - 2*np.pi])/3) - a1/3
     jax.debug.print("Q={Q}, R={R}, theta={theta}, x={x}", Q=Q, R=R, theta=theta, x=x)
     return np.sort(x)[-1]
+
+def solve_cubic(b):
+    a1 = b[2]/b[3]
+    a2 = b[1]/b[3]
+    a3 = b[0]/b[3]
+    Q = (a1**2 - 3*a2)/9
+    R = (2*a1**3 - 9*a1*a2 + 27*a3)/54
+    np.where()
