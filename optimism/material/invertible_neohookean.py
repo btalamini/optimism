@@ -11,11 +11,11 @@ def create_material_model_functions(properties):
                                properties['poisson ratio'])
     J_min = properties['J extrapolation point']
             
-    def strain_energy(dudX, internal_variables, dt):
+    def strain_energy(dudX, internal_variables, dt=0.0):
         del internal_variables, dt
         return energy_density(dudX, lam, mu, J_min)
 
-    def compute_state_new(dudX, internal_variables, dt):
+    def compute_state_new(dudX, internal_variables, dt=0.0):
         del dudX, dt
         return internal_variables
 
@@ -33,9 +33,9 @@ def _make_properties(E, nu):
 
 def energy_density(dudX, lam, mu, J_min):
     J = TensorMath.det(dudX + np.identity(3))
-    return np.where(J >= J_min, standard_energy(dudX, lam, mu), continued_energy(dudX, lam, mu, J_min))
+    return jax.lax.cond(J >= J_min, standard_energy, continued_energy, dudX, lam, mu, J_min)
 
-def standard_energy(dudX, lam, mu):
+def standard_energy(dudX, lam, mu, J_min):
     I1m3 = 2*np.trace(dudX) + np.tensordot(dudX, dudX)
     Jm1 = TensorMath.detpIm1(dudX)
     logJ = np.log1p(Jm1)
