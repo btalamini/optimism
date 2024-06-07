@@ -5,11 +5,12 @@ import invertible_neohookean
 
 E = 1.0
 nu = 0.25
-props = {'elastic modulus': E, 'poisson ratio': nu}
+J_min = 0.9
+props = {'elastic modulus': E, 'poisson ratio': nu, 'J extrapolation point': J_min}
 
 material = invertible_neohookean.create_material_model_functions(props)
 
-stretch_history = np.flip(np.linspace(0.2, 1.1, 10))
+stretch_history = np.flip(np.linspace(-0.1, 1.0, 20))
 Q = material.compute_initial_state()
 energy_history = []
 
@@ -21,5 +22,5 @@ for stretch in stretch_history:
 print(stretch_history)
 print(energy_history)
 import matplotlib.pyplot as plt
-plt.plot(stretch_history, energy_history)
+plt.plot(stretch_history, energy_history, '-o')
 plt.show()
