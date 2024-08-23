@@ -9,7 +9,7 @@ from optimism.test import TestFixture
 def random_displacement_gradient_with_set_J(key, J):
     H = jax.random.uniform(key, (3, 3))       
     F = H + np.identity(3)
-    F *= (J/np.linalg.det(F))**(1/3)
+    F *= np.sign(J)*(np.abs(J)/np.linalg.det(F))**(1/3)
     return F - np.identity(3)
 
 def random_rotation(key):
@@ -97,6 +97,12 @@ class TestInvertibleNeoHookean(TestFixture.TestFixture):
     #     idx = np.argmax( np.abs((A1 - A2)/A1) )
     #     diff = np.abs((A1.ravel()[idx] - A2.ravel()[idx])/A1.ravel()[idx])
     #     self.assertLess(diff, 1e-5)
+
+    def test_negative_jacobian_no_nan(self):
+        key = jax.random.PRNGKey(0)
+        dispGrad = random_displacement_gradient_with_set_J(key, -0.2)
+        energy = self.compute_energy_density(dispGrad, self.internalVariables)
+        self.assertFalse(np.isnan(energy))
 
 if __name__ == "__main__":
     unittest.main()
