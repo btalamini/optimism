@@ -27,7 +27,7 @@ def create_material_model_functions(properties):
                          density)
 
 def _make_properties(E, nu):
-    lam = E/(1 + nu)/(1 - 2*nu)
+    lam = E*nu/(1 + nu)/(1 - 2*nu)
     mu = 0.5*E/(1 + nu)
     return lam, mu
 
