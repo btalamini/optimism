@@ -43,11 +43,10 @@ def standard_energy(dudX, lam, mu, J_min):
 
 def continued_energy(dudX, lam, mu, J_min):
     F = dudX + np.identity(3)
-    J = np.linalg.det(F)
     C = F.T@F
     stretches_squared, right_evecs = TensorMath.eigen_sym33_unit(C)
     stretches = np.sqrt(stretches_squared)
-    stretches = stretches.at[0].set(np.where(J < 0, -stretches[0], stretches[0]))
+    stretches = stretches.at[0].set(np.where(np.linalg.det(F) < 0, -stretches[0], stretches[0]))
     r = np.ones(3)
     ee = stretches - 1
     I1 = ee[0] + ee[1] + ee[2]
@@ -58,10 +57,10 @@ def continued_energy(dudX, lam, mu, J_min):
     q = r + s*ee
     h = np.linalg.norm(stretches - q)
     v = h*ee/np.linalg.norm(ee) # h*u in the paper
-    # jax.debug.print("s={s}, h={h}, u={u}, q={q}", s=s, h=h, u=v, q=q)
-    psi0, psi1 = jax.jvp(_energy_from_principal_stretches, (q, lam, mu), (v, 0.0, 0.0))
-    _, Av = jax.jvp(jax.grad(_energy_from_principal_stretches, 0), (q, lam, mu), (v, 0.0, 0.0))
-    psi2 =  0.5*np.dot(v, Av)
+    W = lambda s: _energy_from_principal_stretches(s, lam, mu)
+    psi0, psi1 = jax.jvp(W, (q,), (v,))
+    hess = jax.hessian(W)(q)
+    psi2 = 0.5*np.dot(v, hess.dot(v))
     return psi0 + psi1 + psi2
 
 def _energy_from_principal_stretches(stretches, lam, mu):
