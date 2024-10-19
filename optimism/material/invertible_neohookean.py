@@ -44,20 +44,19 @@ def standard_energy(dudX, lam, mu, J_min):
 def continued_energy(dudX, lam, mu, J_min):
     F = dudX + np.identity(3)
     C = F.T@F
-    stretches_squared, right_evecs = TensorMath.eigen_sym33_unit(C)
+    stretches_squared, _ = TensorMath.eigen_sym33_unit(C)
     stretches = np.sqrt(stretches_squared)
     stretches = stretches.at[0].set(np.where(np.linalg.det(F) < 0, -stretches[0], stretches[0]))
-    r = np.ones(3)
     ee = stretches - 1
     I1 = ee[0] + ee[1] + ee[2]
     I2 = ee[0]*ee[1] + ee[1]*ee[2] + ee[2]*ee[0]
     I3 = ee[0]*ee[1]*ee[2]
     solver_settings = ScalarRootFind.get_settings(x_tol=1e-8)
     s, _ = ScalarRootFind.find_root(lambda x: I3*x**3 + I2*x**2 + I1*x + (1 - J_min), 0.5, np.array([0.0, 1.0]), solver_settings)
-    q = r + s*ee
+    q = 1 + s*ee # series expansion point
     h = np.linalg.norm(stretches - q)
     v = h*ee/np.linalg.norm(ee) # h*u in the paper
-    W = lambda s: _energy_from_principal_stretches(s, lam, mu)
+    W = lambda x: _energy_from_principal_stretches(x, lam, mu)
     psi0, psi1 = jax.jvp(W, (q,), (v,))
     hess = jax.hessian(W)(q)
     psi2 = 0.5*np.dot(v, hess.dot(v))
