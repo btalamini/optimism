@@ -66,5 +66,6 @@ def power_law(eqps, Y0, n, eps0):
 
 
 def power_law_rate_sensitivity(eqps, eqpsOld, dt, S, m, epsDot0):
+    dt = np.where(dt > 0, dt, 1.0)
     eqpsDot = (eqps - eqpsOld)/dt
     return m/(m + 1)*S*epsDot0*dt*(eqpsDot/epsDot0)**((m+1)/m)
