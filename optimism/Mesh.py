@@ -152,6 +152,13 @@ def mesh_with_nodesets(mesh, nodeSets):
                 mesh.blocks, nodeSets, mesh.sideSets)
 
 
+def mesh_with_sidesets(mesh, sideSets):
+    return Mesh.Mesh(mesh.coords, mesh.conns,
+                     mesh.simplexNodesOrdinals,
+                     mesh.parentElement, mesh.parentElement1d,
+                     mesh.blocks, mesh.nodeSets, sideSets)
+
+
 def mesh_with_blocks(mesh, blocks):
     return Mesh(mesh.coords, mesh.conns,
                 mesh.simplexNodesOrdinals,
