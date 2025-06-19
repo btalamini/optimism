@@ -4,6 +4,15 @@ optimism.contact.test package
 Submodules
 ----------
 
+optimism.contact.test.SlidePlot module
+--------------------------------------
+
+.. automodule:: optimism.contact.test.SlidePlot
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   :private-members:
+
 optimism.contact.test.test\_Contact module
 ------------------------------------------
 
@@ -31,6 +40,15 @@ optimism.contact.test.test\_EdgeIntersection module
    :show-inheritance:
    :private-members:
 
+optimism.contact.test.test\_IntegralPenaltyContact module
+---------------------------------------------------------
+
+.. automodule:: optimism.contact.test.test_IntegralPenaltyContact
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   :private-members:
+
 optimism.contact.test.test\_LevelsetConstraint module
 -----------------------------------------------------
 
@@ -44,6 +62,15 @@ optimism.contact.test.test\_MortarGeom module
 ---------------------------------------------
 
 .. automodule:: optimism.contact.test.test_MortarGeom
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   :private-members:
+
+optimism.contact.test.test\_NeighborSearch module
+-------------------------------------------------
+
+.. automodule:: optimism.contact.test.test_NeighborSearch
    :members:
    :undoc-members:
    :show-inheritance:

@@ -104,6 +104,7 @@
 <li class="toctree-l4"><a class="reference internal" href="optimism.contact.html#module-optimism.contact.EdgeCpp">optimism.contact.EdgeCpp module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="optimism.contact.html#module-optimism.contact.EdgeIntersection">optimism.contact.EdgeIntersection module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="optimism.contact.html#module-optimism.contact.Friction">optimism.contact.Friction module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="optimism.contact.html#module-optimism.contact.IntegralPenaltyContact">optimism.contact.IntegralPenaltyContact module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="optimism.contact.html#module-optimism.contact.Levelset">optimism.contact.Levelset module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="optimism.contact.html#module-optimism.contact.LevelsetConstraint">optimism.contact.LevelsetConstraint module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="optimism.contact.html#module-optimism.contact.MortarContact">optimism.contact.MortarContact module</a></li>
@@ -187,6 +188,30 @@
 <h1>optimism.contact.test package<a class="headerlink" href="#optimism-contact-test-package" title="Link to this heading"></a></h1>
 <section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-optimism.contact.test.SlidePlot">
+<span id="optimism-contact-test-slideplot-module"></span><h2>optimism.contact.test.SlidePlot module<a class="headerlink" href="#module-optimism.contact.test.SlidePlot" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="optimism.contact.test.SlidePlot.slide_plot">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">optimism.contact.test.SlidePlot.</span></span><span class="sig-name descname"><span class="pre">slide_plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fig</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_range</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimism/contact/test/SlidePlot.html#slide_plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimism.contact.test.SlidePlot.slide_plot" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="optimism.contact.test.SlidePlot.slide_plot.arrow">
+<span class="sig-name descname"><span class="pre">arrow</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot_func_of_t</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimism/contact/test/SlidePlot.html#slide_plot.arrow"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimism.contact.test.SlidePlot.slide_plot.arrow" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimism.contact.test.SlidePlot.slide_plot.plot">
+<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot_func_of_t</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mods</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'k'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimism/contact/test/SlidePlot.html#slide_plot.plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimism.contact.test.SlidePlot.slide_plot.plot" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimism.contact.test.SlidePlot.slide_plot.show">
+<span class="sig-name descname"><span class="pre">show</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimism/contact/test/SlidePlot.html#slide_plot.show"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimism.contact.test.SlidePlot.slide_plot.show" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </section>
 <section id="module-optimism.contact.test.test_Contact">
 <span id="optimism-contact-test-test-contact-module"></span><h2>optimism.contact.test.test_Contact module<a class="headerlink" href="#module-optimism.contact.test.test_Contact" title="Link to this heading"></a></h2>
@@ -393,6 +418,101 @@
 </dd></dl>
 
 </section>
+<section id="module-optimism.contact.test.test_IntegralPenaltyContact">
+<span id="optimism-contact-test-test-integralpenaltycontact-module"></span><h2>optimism.contact.test.test_IntegralPenaltyContact module<a class="headerlink" href="#module-optimism.contact.test.test_IntegralPenaltyContact" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="optimism.contact.test.test_IntegralPenaltyContact.TestEdgeIntersection">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">optimism.contact.test.test_IntegralPenaltyContact.</span></span><span class="sig-name descname"><span class="pre">TestEdgeIntersection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">methodName</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'runTest'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimism/contact/test/test_IntegralPenaltyContact.html#TestEdgeIntersection"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimism.contact.test.test_IntegralPenaltyContact.TestEdgeIntersection" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="optimism.test.html#optimism.test.TestFixture.TestFixture" title="optimism.test.TestFixture.TestFixture"><code class="xref py py-class docutils literal notranslate"><span class="pre">TestFixture</span></code></a></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="optimism.contact.test.test_IntegralPenaltyContact.TestEdgeIntersection._classSetupFailed">
+<span class="sig-name descname"><span class="pre">_classSetupFailed</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#optimism.contact.test.test_IntegralPenaltyContact.TestEdgeIntersection._classSetupFailed" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="optimism.contact.test.test_IntegralPenaltyContact.TestEdgeIntersection._class_cleanups">
+<span class="sig-name descname"><span class="pre">_class_cleanups</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="headerlink" href="#optimism.contact.test.test_IntegralPenaltyContact.TestEdgeIntersection._class_cleanups" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="optimism.contact.test.test_IntegralPenaltyContact.TestEdgeIntersection.plotting">
+<span class="sig-name descname"><span class="pre">plotting</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#optimism.contact.test.test_IntegralPenaltyContact.TestEdgeIntersection.plotting" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimism.contact.test.test_IntegralPenaltyContact.TestEdgeIntersection.setUp">
+<span class="sig-name descname"><span class="pre">setUp</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimism/contact/test/test_IntegralPenaltyContact.html#TestEdgeIntersection.setUp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimism.contact.test.test_IntegralPenaltyContact.TestEdgeIntersection.setUp" title="Link to this definition"></a></dt>
+<dd><p>Hook method for setting up the test fixture before exercising it.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimism.contact.test.test_IntegralPenaltyContact.TestEdgeIntersection.test_integral_both_equal_in_contact">
+<span class="sig-name descname"><span class="pre">test_integral_both_equal_in_contact</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimism/contact/test/test_IntegralPenaltyContact.html#TestEdgeIntersection.test_integral_both_equal_in_contact"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimism.contact.test.test_IntegralPenaltyContact.TestEdgeIntersection.test_integral_both_equal_in_contact" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimism.contact.test.test_IntegralPenaltyContact.TestEdgeIntersection.test_integral_both_equal_out_of_contact">
+<span class="sig-name descname"><span class="pre">test_integral_both_equal_out_of_contact</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimism/contact/test/test_IntegralPenaltyContact.html#TestEdgeIntersection.test_integral_both_equal_out_of_contact"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimism.contact.test.test_IntegralPenaltyContact.TestEdgeIntersection.test_integral_both_equal_out_of_contact" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimism.contact.test.test_IntegralPenaltyContact.TestEdgeIntersection.test_integral_both_in_contact">
+<span class="sig-name descname"><span class="pre">test_integral_both_in_contact</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimism/contact/test/test_IntegralPenaltyContact.html#TestEdgeIntersection.test_integral_both_in_contact"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimism.contact.test.test_IntegralPenaltyContact.TestEdgeIntersection.test_integral_both_in_contact" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimism.contact.test.test_IntegralPenaltyContact.TestEdgeIntersection.test_integral_both_out_of_contact">
+<span class="sig-name descname"><span class="pre">test_integral_both_out_of_contact</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimism/contact/test/test_IntegralPenaltyContact.html#TestEdgeIntersection.test_integral_both_out_of_contact"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimism.contact.test.test_IntegralPenaltyContact.TestEdgeIntersection.test_integral_both_out_of_contact" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimism.contact.test.test_IntegralPenaltyContact.TestEdgeIntersection.test_integral_in_out_of_contact">
+<span class="sig-name descname"><span class="pre">test_integral_in_out_of_contact</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimism/contact/test/test_IntegralPenaltyContact.html#TestEdgeIntersection.test_integral_in_out_of_contact"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimism.contact.test.test_IntegralPenaltyContact.TestEdgeIntersection.test_integral_in_out_of_contact" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimism.contact.test.test_IntegralPenaltyContact.TestEdgeIntersection.test_integral_some_in_overlap">
+<span class="sig-name descname"><span class="pre">test_integral_some_in_overlap</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimism/contact/test/test_IntegralPenaltyContact.html#TestEdgeIntersection.test_integral_some_in_overlap"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimism.contact.test.test_IntegralPenaltyContact.TestEdgeIntersection.test_integral_some_in_overlap" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimism.contact.test.test_IntegralPenaltyContact.TestEdgeIntersection.test_plot_smoothness">
+<span class="sig-name descname"><span class="pre">test_plot_smoothness</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimism/contact/test/test_IntegralPenaltyContact.html#TestEdgeIntersection.test_plot_smoothness"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimism.contact.test.test_IntegralPenaltyContact.TestEdgeIntersection.test_plot_smoothness" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimism.contact.test.test_IntegralPenaltyContact.TestEdgeIntersection.untest_roundoff">
+<span class="sig-name descname"><span class="pre">untest_roundoff</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimism/contact/test/test_IntegralPenaltyContact.html#TestEdgeIntersection.untest_roundoff"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimism.contact.test.test_IntegralPenaltyContact.TestEdgeIntersection.untest_roundoff" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimism.contact.test.test_IntegralPenaltyContact.TestEdgeIntersection.utest_plot">
+<span class="sig-name descname"><span class="pre">utest_plot</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimism/contact/test/test_IntegralPenaltyContact.html#TestEdgeIntersection.utest_plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimism.contact.test.test_IntegralPenaltyContact.TestEdgeIntersection.utest_plot" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="optimism.contact.test.test_IntegralPenaltyContact.integral">
+<span class="sig-prename descclassname"><span class="pre">optimism.contact.test.test_IntegralPenaltyContact.</span></span><span class="sig-name descname"><span class="pre">integral</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xi0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xi1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">g0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">g1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimism/contact/test/test_IntegralPenaltyContact.html#integral"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimism.contact.test.test_IntegralPenaltyContact.integral" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="optimism.contact.test.test_IntegralPenaltyContact.integrate_gap_numeric">
+<span class="sig-prename descclassname"><span class="pre">optimism.contact.test.test_IntegralPenaltyContact.</span></span><span class="sig-name descname"><span class="pre">integrate_gap_numeric</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xi</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">g</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delta</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimism/contact/test/test_IntegralPenaltyContact.html#integrate_gap_numeric"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimism.contact.test.test_IntegralPenaltyContact.integrate_gap_numeric" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="optimism.contact.test.test_IntegralPenaltyContact.precise_integral">
+<span class="sig-prename descclassname"><span class="pre">optimism.contact.test.test_IntegralPenaltyContact.</span></span><span class="sig-name descname"><span class="pre">precise_integral</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xi0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xi1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">g0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">g1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimism/contact/test/test_IntegralPenaltyContact.html#precise_integral"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimism.contact.test.test_IntegralPenaltyContact.precise_integral" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="optimism.contact.test.test_IntegralPenaltyContact.taylor_integral">
+<span class="sig-prename descclassname"><span class="pre">optimism.contact.test.test_IntegralPenaltyContact.</span></span><span class="sig-name descname"><span class="pre">taylor_integral</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xi0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xi1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">g0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">g1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimism/contact/test/test_IntegralPenaltyContact.html#taylor_integral"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimism.contact.test.test_IntegralPenaltyContact.taylor_integral" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
 <section id="module-optimism.contact.test.test_LevelsetConstraint">
 <span id="optimism-contact-test-test-levelsetconstraint-module"></span><h2>optimism.contact.test.test_LevelsetConstraint module<a class="headerlink" href="#module-optimism.contact.test.test_LevelsetConstraint" title="Link to this heading"></a></h2>
 <dl class="py class">
@@ -501,6 +621,66 @@
 <dt class="sig sig-object py" id="optimism.contact.test.test_MortarGeom.spline_ramp">
 <span class="sig-prename descclassname"><span class="pre">optimism.contact.test.test_MortarGeom.</span></span><span class="sig-name descname"><span class="pre">spline_ramp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">eta</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimism/contact/test/test_MortarGeom.html#spline_ramp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimism.contact.test.test_MortarGeom.spline_ramp" title="Link to this definition"></a></dt>
 <dd></dd></dl>
+
+</section>
+<section id="module-optimism.contact.test.test_NeighborSearch">
+<span id="optimism-contact-test-test-neighborsearch-module"></span><h2>optimism.contact.test.test_NeighborSearch module<a class="headerlink" href="#module-optimism.contact.test.test_NeighborSearch" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="optimism.contact.test.test_NeighborSearch.SelfContactPenaltyFixture">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">optimism.contact.test.test_NeighborSearch.</span></span><span class="sig-name descname"><span class="pre">SelfContactPenaltyFixture</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">methodName</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'runTest'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimism/contact/test/test_NeighborSearch.html#SelfContactPenaltyFixture"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimism.contact.test.test_NeighborSearch.SelfContactPenaltyFixture" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="optimism.test.html#optimism.test.MeshFixture.MeshFixture" title="optimism.test.MeshFixture.MeshFixture"><code class="xref py py-class docutils literal notranslate"><span class="pre">MeshFixture</span></code></a></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="optimism.contact.test.test_NeighborSearch.SelfContactPenaltyFixture._classSetupFailed">
+<span class="sig-name descname"><span class="pre">_classSetupFailed</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#optimism.contact.test.test_NeighborSearch.SelfContactPenaltyFixture._classSetupFailed" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="optimism.contact.test.test_NeighborSearch.SelfContactPenaltyFixture._class_cleanups">
+<span class="sig-name descname"><span class="pre">_class_cleanups</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="headerlink" href="#optimism.contact.test.test_NeighborSearch.SelfContactPenaltyFixture._class_cleanups" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimism.contact.test.test_NeighborSearch.SelfContactPenaltyFixture.min_distance_squared">
+<span class="sig-name descname"><span class="pre">min_distance_squared</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">edge1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coords</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimism/contact/test/test_NeighborSearch.html#SelfContactPenaltyFixture.min_distance_squared"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimism.contact.test.test_NeighborSearch.SelfContactPenaltyFixture.min_distance_squared" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimism.contact.test.test_NeighborSearch.SelfContactPenaltyFixture.setUp">
+<span class="sig-name descname"><span class="pre">setUp</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimism/contact/test/test_NeighborSearch.html#SelfContactPenaltyFixture.setUp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimism.contact.test.test_NeighborSearch.SelfContactPenaltyFixture.setUp" title="Link to this definition"></a></dt>
+<dd><p>Hook method for setting up the test fixture before exercising it.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimism.contact.test.test_NeighborSearch.SelfContactPenaltyFixture.test_exclusion_of_current_edge">
+<span class="sig-name descname"><span class="pre">test_exclusion_of_current_edge</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimism/contact/test/test_NeighborSearch.html#SelfContactPenaltyFixture.test_exclusion_of_current_edge"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimism.contact.test.test_NeighborSearch.SelfContactPenaltyFixture.test_exclusion_of_current_edge" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimism.contact.test.test_NeighborSearch.SelfContactPenaltyFixture.test_exclusion_of_edges_on_opposite_face">
+<span class="sig-name descname"><span class="pre">test_exclusion_of_edges_on_opposite_face</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimism/contact/test/test_NeighborSearch.html#SelfContactPenaltyFixture.test_exclusion_of_edges_on_opposite_face"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimism.contact.test.test_NeighborSearch.SelfContactPenaltyFixture.test_exclusion_of_edges_on_opposite_face" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimism.contact.test.test_NeighborSearch.SelfContactPenaltyFixture.test_inclusion_of_edges_on_adjacent_face">
+<span class="sig-name descname"><span class="pre">test_inclusion_of_edges_on_adjacent_face</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimism/contact/test/test_NeighborSearch.html#SelfContactPenaltyFixture.test_inclusion_of_edges_on_adjacent_face"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimism.contact.test.test_NeighborSearch.SelfContactPenaltyFixture.test_inclusion_of_edges_on_adjacent_face" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimism.contact.test.test_NeighborSearch.SelfContactPenaltyFixture.test_invalid_entries_have_minus_one_if_included">
+<span class="sig-name descname"><span class="pre">test_invalid_entries_have_minus_one_if_included</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimism/contact/test/test_NeighborSearch.html#SelfContactPenaltyFixture.test_invalid_entries_have_minus_one_if_included"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimism.contact.test.test_NeighborSearch.SelfContactPenaltyFixture.test_invalid_entries_have_minus_one_if_included" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimism.contact.test.test_NeighborSearch.SelfContactPenaltyFixture.test_pacman_detection_1">
+<span class="sig-name descname"><span class="pre">test_pacman_detection_1</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimism/contact/test/test_NeighborSearch.html#SelfContactPenaltyFixture.test_pacman_detection_1"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimism.contact.test.test_NeighborSearch.SelfContactPenaltyFixture.test_pacman_detection_1" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimism.contact.test.test_NeighborSearch.SelfContactPenaltyFixture.test_pacman_detection_2">
+<span class="sig-name descname"><span class="pre">test_pacman_detection_2</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimism/contact/test/test_NeighborSearch.html#SelfContactPenaltyFixture.test_pacman_detection_2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimism.contact.test.test_NeighborSearch.SelfContactPenaltyFixture.test_pacman_detection_2" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
 
 </section>
 <section id="module-optimism.contact.test.test_NewtonGlobalization">
@@ -807,6 +987,48 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="optimism.contact.test.test_TwoBodyMortarContact.TwoBodyContactFixture.test_contact_search">
 <span class="sig-name descname"><span class="pre">test_contact_search</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimism/contact/test/test_TwoBodyMortarContact.html#TwoBodyContactFixture.test_contact_search"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimism.contact.test.test_TwoBodyMortarContact.TwoBodyContactFixture.test_contact_search" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="optimism.contact.test.test_TwoBodyMortarContact.TwoBodySelfContactFixture">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">optimism.contact.test.test_TwoBodyMortarContact.</span></span><span class="sig-name descname"><span class="pre">TwoBodySelfContactFixture</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">methodName</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'runTest'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimism/contact/test/test_TwoBodyMortarContact.html#TwoBodySelfContactFixture"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimism.contact.test.test_TwoBodyMortarContact.TwoBodySelfContactFixture" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="optimism.test.html#optimism.test.MeshFixture.MeshFixture" title="optimism.test.MeshFixture.MeshFixture"><code class="xref py py-class docutils literal notranslate"><span class="pre">MeshFixture</span></code></a></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="optimism.contact.test.test_TwoBodyMortarContact.TwoBodySelfContactFixture._classSetupFailed">
+<span class="sig-name descname"><span class="pre">_classSetupFailed</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#optimism.contact.test.test_TwoBodyMortarContact.TwoBodySelfContactFixture._classSetupFailed" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="optimism.contact.test.test_TwoBodyMortarContact.TwoBodySelfContactFixture._class_cleanups">
+<span class="sig-name descname"><span class="pre">_class_cleanups</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="headerlink" href="#optimism.contact.test.test_TwoBodyMortarContact.TwoBodySelfContactFixture._class_cleanups" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimism.contact.test.test_TwoBodyMortarContact.TwoBodySelfContactFixture.setUp">
+<span class="sig-name descname"><span class="pre">setUp</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimism/contact/test/test_TwoBodyMortarContact.html#TwoBodySelfContactFixture.setUp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimism.contact.test.test_TwoBodyMortarContact.TwoBodySelfContactFixture.setUp" title="Link to this definition"></a></dt>
+<dd><p>Hook method for setting up the test fixture before exercising it.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimism.contact.test.test_TwoBodyMortarContact.TwoBodySelfContactFixture.test_mortar_integral_computes_expected_area">
+<span class="sig-name descname"><span class="pre">test_mortar_integral_computes_expected_area</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimism/contact/test/test_TwoBodyMortarContact.html#TwoBodySelfContactFixture.test_mortar_integral_computes_expected_area"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimism.contact.test.test_TwoBodyMortarContact.TwoBodySelfContactFixture.test_mortar_integral_computes_expected_area" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimism.contact.test.test_TwoBodyMortarContact.TwoBodySelfContactFixture.test_mortar_integral_computes_no_penetration">
+<span class="sig-name descname"><span class="pre">test_mortar_integral_computes_no_penetration</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimism/contact/test/test_TwoBodyMortarContact.html#TwoBodySelfContactFixture.test_mortar_integral_computes_no_penetration"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimism.contact.test.test_TwoBodyMortarContact.TwoBodySelfContactFixture.test_mortar_integral_computes_no_penetration" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimism.contact.test.test_TwoBodyMortarContact.TwoBodySelfContactFixture.test_neighbor_search_excludes_current_and_adjacent_edges">
+<span class="sig-name descname"><span class="pre">test_neighbor_search_excludes_current_and_adjacent_edges</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimism/contact/test/test_TwoBodyMortarContact.html#TwoBodySelfContactFixture.test_neighbor_search_excludes_current_and_adjacent_edges"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimism.contact.test.test_TwoBodyMortarContact.TwoBodySelfContactFixture.test_neighbor_search_excludes_current_and_adjacent_edges" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimism.contact.test.test_TwoBodyMortarContact.TwoBodySelfContactFixture.test_penalty_potential_gradient_contains_no_nan">
+<span class="sig-name descname"><span class="pre">test_penalty_potential_gradient_contains_no_nan</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimism/contact/test/test_TwoBodyMortarContact.html#TwoBodySelfContactFixture.test_penalty_potential_gradient_contains_no_nan"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimism.contact.test.test_TwoBodyMortarContact.TwoBodySelfContactFixture.test_penalty_potential_gradient_contains_no_nan" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
